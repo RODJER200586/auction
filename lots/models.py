@@ -13,7 +13,7 @@ class Lot(models.Model):
     )
     name = models.CharField(max_length=500)
     description = models.TextField()
-    image = models.ImageField(upload_to='uploads/%Y/%m/%d/')
+    image = models.ImageField(upload_to='lots/%Y/%m/%d/')
     start = models.DateTimeField()
     finish = models.DateTimeField()
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=OPENED)
