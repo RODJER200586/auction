@@ -1,0 +1,9 @@
+{% if latest_lot_list %}
+    <ul>
+    {% for lot in latest_lot_list %}
+       <li><a href="{% url 'detail' lot.id %}">{{ lot.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No lots are available.</p>
+{% endif %}
