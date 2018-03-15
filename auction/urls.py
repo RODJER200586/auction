@@ -1,7 +1,10 @@
-from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
+
+from . import views
 
 urlpatterns = [
-    path('lots/', include('lots.urls')),
-    path('admin/', admin.site.urls),
+    path('', views.IndexView.as_view(), name='index'),
+    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    path('<int:lot_id>/results/', views.results, name='results'),
+    path('<int:lot_id>/vote/', views.vote, name='vote'),
 ]
