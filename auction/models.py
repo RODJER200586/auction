@@ -27,3 +27,17 @@ class Lot(models.Model):
     class Meta:
         verbose_name = 'Лот'
         verbose_name_plural = 'Лоты'
+
+
+class Bid(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, verbose_name='Лот')
+    amount = models.IntegerField(verbose_name='Сумма')
+    inserted_at = models.DateTimeField(auto_now_add=True, verbose_name='Добавлено')
+
+    def __str__(self):
+        return "#{id}".format(id=self.id)
+
+    class Meta:
+        verbose_name = 'Ставка'
+        verbose_name_plural = 'Ставки'
