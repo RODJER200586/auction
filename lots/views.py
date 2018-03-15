@@ -1,18 +1,20 @@
-from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+from django.views import generic
 
 from .models import Lot
 
 
-def index(request):
-    latest_lot_list = Lot.objects.order_by('-id')[:5]
-    context = {'latest_lot_list': latest_lot_list}
-    return render(request, 'index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'index.html'
+    context_object_name = 'latest_lot_list'
+
+    def get_queryset(self):
+        return Lot.objects.order_by('-id')[:5]
 
 
-def detail(request, lot_id):
-    lot = get_object_or_404(Lot, pk=lot_id)
-    return render(request, 'detail.html', {'lot': lot})
+class DetailView(generic.DetailView):
+    model = Lot
+    template_name = 'detail.html'
 
 
 def results(request, lot_id):
