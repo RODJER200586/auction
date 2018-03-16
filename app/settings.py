@@ -53,7 +53,9 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,9 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-RU'
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'translations', 'locale'),
-)
+# LOCALE_PATHS = (
+#     os.path.join(BASE_DIR, 'translations', 'locale'),
+# )
 
 TIME_ZONE = 'UTC'
 
@@ -120,7 +122,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'app_static/'),
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 MEDIA_URL = '/uploads/'
