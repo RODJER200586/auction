@@ -7,7 +7,3 @@ class MainPageView(generic.TemplateView):
 
 class ContactsView(generic.TemplateView):
     template_name = 'contacts.html'
-
-
-class ProfileView(generic.TemplateView):
-    template_name = 'profile.html'
