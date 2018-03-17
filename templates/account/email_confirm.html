@@ -1,32 +1,49 @@
 {% extends "account/base.html" %}
 
-{% load i18n %}
-{% load account %}
-
-{% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
-
+{% block title %}Подтвердите e-mail адрес{% endblock %}
 
 {% block content %}
-<h1>{% trans "Confirm E-mail Address" %}</h1>
 
 {% if confirmation %}
 
-{% user_display confirmation.email_address.user as user_display %}
-
-<p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{
-    email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
-
-<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-    {% csrf_token %}
-    <button type="submit">{% trans 'Confirm' %}</button>
-</form>
+<div class="uk-card uk-card-body uk-card-default">
+    <h3 class="uk-card-title">Подтвердите e-mail адрес</h3>
+    <p>
+        Пожалуйста, подтвердите <a href="mailto:{{ email }}">{{ confirmation.email_address.email }}</a>
+        для пользователя {{ confirmation.email_address.user }}.
+    </p>
+    <form class="uk-form-horizontal"
+          method="post"
+          action="{% url 'account_confirm_email' confirmation.key %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        {% for field in form %}
+        {% if field.errors %}
+        {% for error in field.errors %}
+        <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{ error | escape }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+        <button class="uk-button uk-button-primary" type="submit">Подтвердить</button>
+    </form>
+</div>
 
 {% else %}
 
 {% url 'account_email' as email_url %}
 
-<p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new
-    e-mail confirmation request</a>.{% endblocktrans %}</p>
+<div class="uk-card uk-card-body uk-card-default">
+    <h3 class="uk-card-title">Подтвердите e-mail адрес</h3>
+    <p>
+        Ссылка некорректна или срок её действия истек. Пожалуйста,
+        <a href="{{ email_url }}">запросите подтверждение e-mail заново</a>.
+    </p>
+</div>
 
 {% endif %}
 

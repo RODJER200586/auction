@@ -21,6 +21,7 @@
                 <a href="javascript: void(0);">{{ user.username }}</a>
                 <div class="uk-navbar-dropdown uk-background-secondary">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li><a href="{% url 'account_email' %}">E-mail адреса</a></li>
                         <li><a href="{% url 'account_reset_password' %}">Сменить пароль</a></li>
                         <li><a href="{% url 'account_change_password' %}">Сброс пароля</a></li>
                         <li><a href="{% url 'account_logout' %}">Выйти</a></li>
