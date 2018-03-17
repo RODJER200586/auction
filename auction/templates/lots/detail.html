@@ -1,2 +1,21 @@
-<h1>{{ lot.name }}</h1>
-<span>{{ lot.description }}</span>
+{% extends "layout/app.html" %}
+
+{% block title %}
+#{{ lot.id }} {{ lot.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="uk-card uk-card-default">
+    <div class="uk-card-media-top uk-background-cover uk-width-1-1 uk-height-medium uk-inline"
+         style="background-image: url({{ lot.image.url }});">
+        <div class="uk-overlay uk-overlay-primary uk-position-bottom">
+            <p>{{ lot.name }}</p>
+        </div>
+    </div>
+    <div class="uk-card-body uk-flex uk-flex-center">
+        {{ lot.description }}
+    </div>
+</div>
+
+{% endblock %}
