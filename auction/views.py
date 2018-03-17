@@ -1,11 +1,10 @@
-from django.http import HttpResponse
 from django.views import generic
 
 from .models import Lot
 
 
-class IndexView(generic.ListView):
-    template_name = 'index.html'
+class ListView(generic.ListView):
+    template_name = 'lots/list.html'
     context_object_name = 'latest_lot_list'
 
     def get_queryset(self):
@@ -14,13 +13,4 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Lot
-    template_name = 'detail.html'
-
-
-def results(request, lot_id):
-    response = "You're looking at the results of lot %s."
-    return HttpResponse(response % lot_id)
-
-
-def vote(request, lot_id):
-    return HttpResponse("You're voting on lot %s." % lot_id)
+    template_name = 'lots/detail.html'
