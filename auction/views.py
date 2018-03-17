@@ -9,7 +9,7 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_lot_list'
 
     def get_queryset(self):
-        return Lot.objects.order_by('-id')[:5]
+        return Lot.objects.order_by('-id')
 
 
 class DetailView(generic.DetailView):

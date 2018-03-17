@@ -1,0 +1,27 @@
+<nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+    <div class="uk-navbar-left">
+        {% load static %}
+        <a class="uk-navbar-item uk-logo" href="/">
+            <img src="{% static 'images/logo_48.png' %}"/>
+            <div class="uk-margin-left">Roger's Auctions</div>
+        </a>
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="/lots/">Аукционы</a>
+            </li>
+            <li>
+                <a href="/contacts/">Контакты</a>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="/lots/">Зарегистрироваться</a>
+            </li>
+            <li>
+                <a href="/contacts/">Войти</a>
+            </li>
+        </ul>
+    </div>
+</nav>
