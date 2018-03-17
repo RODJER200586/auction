@@ -2,62 +2,140 @@
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Account" %}{% endblock %}
+{% block title %}E-mail адреса{% endblock %}
 
 {% block content %}
-<h1>{% trans "E-mail Addresses" %}</h1>
+
 {% if user.emailaddress_set.all %}
-<p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
 
-<form action="{% url 'account_email' %}" class="email_list" method="post">
-    {% csrf_token %}
-    <fieldset class="blockLabels">
-        {% for emailaddress in user.emailaddress_set.all %}
-        <div class="ctrlHolder">
-            <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
-                <input id="email_radio_{{forloop.counter}}"
-                       type="radio"
-                       name="email"
-                       {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked" {% endif %}
-                       value="{{emailaddress.email}}"/>
-                {{ emailaddress.email }}
-                {% if emailaddress.verified %}
-                <span class="verified">{% trans "Verified" %}</span>
-                {% else %}
-                <span class="unverified">{% trans "Unverified" %}</span>
-                {% endif %}
-                {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
-            </label>
-        </div>
-        {% endfor %}
-        <div class="buttonHolder">
-            <button class="secondaryAction" type="submit" name="action_primary">{% trans 'Make Primary' %}</button>
-            <button class="secondaryAction" type="submit" name="action_send">{% trans 'Re-send Verification' %}</button>
-            <button class="primaryAction" type="submit" name="action_remove">{% trans 'Remove' %}</button>
-        </div>
-
-    </fieldset>
-</form>
+<div class="uk-card uk-card-default uk-margin-bottom">
+    <div class="uk-card-header">
+        <h3 class="uk-card-title">E-mail адреса</h3>
+        <p>
+            Следующие e-mail адреса прикреплены к вашему аккаунту
+        </p>
+    </div>
+    <div class="uk-card-body">
+        <form method="post"
+              action="{% url 'account_email' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            {% for field in form %}
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <div class="uk-alert-danger" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ error | escape }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            {% for emailaddress in user.emailaddress_set.all %}
+            <div class="uk-margin-small">
+                <label for="email_radio_{{ forloop.counter }}"
+                       class="{% if emailaddress.primary %}primary_email{% endif %}">
+                    <input id="email_radio_{{ forloop.counter }}"
+                           type="radio"
+                           class="uk-radio"
+                           name="email"
+                           {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked" {% endif %}
+                           value="{{ emailaddress.email }}"/>
+                    {{ emailaddress.email }}
+                    {% if emailaddress.verified %}
+                    <span class="uk-label">Подтвержден</span>
+                    {% else %}
+                    <span class="uk-label uk-label-warning">Не подтвержден</span>
+                    {% endif %}
+                    {% if emailaddress.primary %}
+                    <span class="uk-label uk-label-success">Основной</span>
+                    {% endif %}
+                </label>
+            </div>
+            {% endfor %}
+            <div class="uk-margin-small uk-margin-medium-top">
+                <button class="uk-button uk-button-primary"
+                        type="submit"
+                        name="action_primary">
+                    Сделать основным
+                </button>
+                <button class="uk-button uk-button-secondary"
+                        type="submit"
+                        name="action_send">
+                    Отправить подтверждение еще раз
+                </button>
+                <button class="uk-button uk-button-danger"
+                        type="submit"
+                        name="action_remove">
+                    Удалить
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% else %}
-<p><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should
-    really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
 
+<div class="uk-alert-warning" uk-alert>
+    <p>
+        Внимание: Сейчас у вас нет прикрепленного e-mail адреса.
+        Рекомендуем добавить, чтобы начать получать уведомления, сброс пароля и прочее.
+    </p>
+</div>
 {% endif %}
 
-
-<h2>{% trans "Add E-mail Address" %}</h2>
-
-<form method="post" action="{% url 'account_email' %}" class="add_email">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name="action_add" type="submit">{% trans "Add E-mail" %}</button>
-</form>
+<div class="uk-card uk-card-default">
+    <div class="uk-card-header">
+        <h3 class="uk-card-title">Добавить e-mail адрес</h3>
+    </div>
+    <div class="uk-card-body">
+        <form class="uk-form-horizontal add_email"
+              method="post"
+              action="{% url 'account_email' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            {% for field in form %}
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <div class="uk-alert-danger" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ error | escape }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.email.id_for_label }}">
+                    {{ form.email.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input"
+                           id="{{ form.email.id_for_label }}"
+                           name="{{ form.email.name }}"
+                           required
+                           type="email">
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <div class="uk-form-controls">
+                    <button class="uk-button uk-button-primary"
+                            name="action_add"
+                            type="submit">Добавить e-mail
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}
 
-
 {% block extra_body %}
+
 <script type="text/javascript">
     (function () {
         var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
@@ -71,4 +149,5 @@
         }
     })();
 </script>
+
 {% endblock %}
