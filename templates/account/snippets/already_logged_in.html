@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load account %}
-
-{% user_display user as user_display %}
-<p><strong>{% trans "Note" %}:</strong> {% blocktrans %}you are already logged in as {{ user_display }}.{% endblocktrans %}</p>
+<div class="uk-alert-warning" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p>Вы уже вошли как {{ user.username }}.</p>
+</div>
