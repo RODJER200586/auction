@@ -1,0 +1,29 @@
+{% extends "account/base.html" %}
+
+{% block title %}Выйти{% endblock %}
+
+{% block content %}
+
+<div class="uk-card uk-card-body uk-card-default">
+    <h3 class="uk-card-title">Выйти</h3>
+    <p>Вы уверены, что хотите выйти?</p>
+    <form class="uk-form-horizontal" method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        {% for field in form %}
+        {% if field.errors %}
+        {% for error in field.errors %}
+        <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{ error | escape }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+        <button class="uk-button uk-button-primary" type="submit">Выйти</button>
+    </form>
+</div>
+
+{% endblock %}

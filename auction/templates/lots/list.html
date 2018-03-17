@@ -3,15 +3,15 @@
 {% block title %}Аукционы{% endblock %}
 
 {% block content %}
-<article class="uk-article">
-    <h1 class="uk-article-title">Аукцион</h1>
-    <p class="uk-article-meta">Актвные лоты</p>
-</article>
-<ul class="uk-breadcrumb">
-    <li><a href="">1</a></li>
-    <li><a href="">2</a></li>
-    <li><span>3</span></li>
-</ul>
+<!--<article class="uk-article">-->
+    <!--<h1 class="uk-article-title">Аукцион</h1>-->
+    <!--<p class="uk-article-meta">Актвные лоты</p>-->
+<!--</article>-->
+<!--<ul class="uk-breadcrumb">-->
+    <!--<li><a href="">1</a></li>-->
+    <!--<li><a href="">2</a></li>-->
+    <!--<li><span>3</span></li>-->
+<!--</ul>-->
 {% if latest_lot_list %}
 <div class="uk-flex-inline uk-flex-wrap uk-width-1-1">
     {% for lot in latest_lot_list %}
@@ -50,21 +50,21 @@
     </div>
     {% endfor %}
 </div>
-<ul class="uk-pagination" uk-margin>
-    <li><a href="#"><span uk-pagination-previous></span></a></li>
-    <li><a href="#">1</a></li>
-    <li class="uk-disabled"><span>...</span></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">6</a></li>
-    <li class="uk-active"><span>7</span></li>
-    <li><a href="#">8</a></li>
-    <li><a href="#">9</a></li>
-    <li><a href="#">10</a></li>
-    <li class="uk-disabled"><span>...</span></li>
-    <li><a href="#">20</a></li>
-    <li><a href="#"><span uk-pagination-next></span></a></li>
-</ul>
+<!--<ul class="uk-pagination" uk-margin>-->
+    <!--<li><a href="#"><span uk-pagination-previous></span></a></li>-->
+    <!--<li><a href="#">1</a></li>-->
+    <!--<li class="uk-disabled"><span>...</span></li>-->
+    <!--<li><a href="#">4</a></li>-->
+    <!--<li><a href="#">5</a></li>-->
+    <!--<li><a href="#">6</a></li>-->
+    <!--<li class="uk-active"><span>7</span></li>-->
+    <!--<li><a href="#">8</a></li>-->
+    <!--<li><a href="#">9</a></li>-->
+    <!--<li><a href="#">10</a></li>-->
+    <!--<li class="uk-disabled"><span>...</span></li>-->
+    <!--<li><a href="#">20</a></li>-->
+    <!--<li><a href="#"><span uk-pagination-next></span></a></li>-->
+<!--</ul>-->
 {% else %}
 <p>No lots are available.</p>
 {% endif %}

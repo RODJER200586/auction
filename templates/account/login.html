@@ -1,0 +1,80 @@
+{% extends "account/base.html" %}
+
+{% block title %}Войти{% endblock %}
+
+{% block content %}
+
+<div class="uk-card uk-card-default">
+    <div class="uk-card-header">
+        <h3 class="uk-card-title">Войти</h3>
+        <p>
+            Если вы еще не создали учетную запись, пожалуйста, сначала <a href="{{ signup_url }}">зарегистрируйтесь</a>.
+        </p>
+    </div>
+    <div class="uk-card-body">
+        <form class="uk-form-horizontal"
+              method="post"
+              action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            {% for field in form %}
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <div class="uk-alert-danger" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ error | escape }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.login.id_for_label }}">
+                    {{ form.login.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input"
+                           id="{{ form.login.id_for_label }}"
+                           name="{{ form.login.name }}"
+                           required
+                           type="text">
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.password.id_for_label }}">
+                    {{ form.password.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input"
+                           id="{{ form.password.id_for_label }}"
+                           name="{{ form.password.name }}"
+                           required
+                           type="password">
+                    <a href="{% url 'account_reset_password' %}">Забыли пароль?</a>
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.remember.id_for_label }}">
+                    {{ form.remember.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-checkbox"
+                           id="{{ form.remember.id_for_label }}"
+                           name="{{ form.remember.name }}"
+                           type="checkbox">
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <div class="uk-form-controls">
+                    <button class="uk-button uk-button-primary" type="submit">Войти</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

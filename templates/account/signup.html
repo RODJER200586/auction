@@ -1,0 +1,90 @@
+{% extends "account/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+
+<div class="uk-card uk-card-default">
+    <div class="uk-card-header">
+        <h3 class="uk-card-title">Регистрация</h3>
+        <p>Уже зарегистрированы? <a href="{{ login_url }}">Войдите</a>.</p>
+    </div>
+    <div class="uk-card-body">
+        <form class="uk-form-horizontal"
+              method="post"
+              action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            {% for field in form %}
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <div class="uk-alert-danger" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ error | escape }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.username.id_for_label }}">
+                    {{ form.username.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input"
+                           id="{{ form.username.id_for_label }}"
+                           name="{{ form.username.name }}"
+                           required
+                           type="text">
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.email.id_for_label }}">
+                    {{ form.email.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input"
+                           id="{{ form.email.id_for_label }}"
+                           name="{{ form.email.name }}"
+                           type="email">
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.password1.id_for_label }}">
+                    {{ form.password1.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input"
+                           id="{{ form.password1.id_for_label }}"
+                           name="{{ form.password1.name }}"
+                           required
+                           type="password">
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <label class="uk-form-label"
+                       for="{{ form.password2.id_for_label }}">
+                    {{ form.password2.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input"
+                           id="{{ form.password2.id_for_label }}"
+                           name="{{ form.password2.name }}"
+                           required
+                           type="password">
+                </div>
+            </div>
+            <div class="uk-margin-small">
+                <div class="uk-form-controls">
+                    <button class="uk-button uk-button-primary" type="submit">Регистрация</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

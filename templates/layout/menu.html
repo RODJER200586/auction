@@ -16,12 +16,20 @@
     </div>
     <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
+            {% if user.is_authenticated %}
             <li>
-                <a href="/lots/">Зарегистрироваться</a>
+                <a href="javascript: void(0);">{{ user.username }}</a>
+                <div class="uk-navbar-dropdown uk-background-secondary">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li><a href="/accounts/profile/">Профиль</a></li>
+                        <li><a href="{% url 'account_logout' %}">Выйти</a></li>
+                    </ul>
+                </div>
             </li>
-            <li>
-                <a href="/contacts/">Войти</a>
-            </li>
+            {% else %}
+            <li><a href="{% url 'account_signup' %}">Зарегистрироваться</a></li>
+            <li><a href="{% url 'account_login' %}">Войти</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
